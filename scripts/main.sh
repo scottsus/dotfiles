@@ -1,7 +1,18 @@
 #!/bin/bash
 
+# dotfiles
+echo "copying dotfiles..."
+if [ -f ~/.zshrc ]; then
+    cat ../root_dotfiles/.zshrc >> ~/.zshrc
+else
+    cp ../root_dotfiles/.zshrc ~/.zshrc
+fi
+cp ../root_dotfiles/.vimrc ~/.vimrc
+cp ../root_dotfiles/.tmux.conf ~/.tmux.conf
+
 # zsh
 echo "installing zsh plugins..."
+mkdir -p ~/.zsh/plugins
 git clone https://github.com/zsh-users/zsh-autosuggestions ~/.zsh/plugins/zsh-autosuggestions
 git clone https://github.com/zsh-users/zsh-syntax-highlighting ~/.zsh/plugins/zsh-syntax-highlighting
 
@@ -14,10 +25,12 @@ echo "upgrading tmux..."
 if [ -f /etc/os-release ]; then
     . /etc/os-release
     if [ "$NAME" == "Amazon Linux" ]; then
-        bash ../tmux/amazon-linux.sh
+        chmod +x ./tmux/amazon-linux.sh
+        bash ./tmux/amazon-linux.sh
     fi
 fi
 echo "installing tpm..."
+mkdir -p ~/.tmux/plugins
 git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 
 # pyenv
@@ -31,12 +44,5 @@ if [ -f /etc/os-release ]; then
     fi
 fi
 
-# dotfiles
-echo "copying dotfiles..."
-if [ -f ~/.zshrc ]; then
-    cat ../root_dotfiles/.zshrc >> ~/.zshrc
-else
-    cp ../root_dotfiles/.zshrc ~/.zshrc
-fi
-cp ../root_dotfiles/.vimrc ~/.vimrc
-cp ../root_dotfiles/.tmux.conf ~/.tmux.conf
+# source
+source ~/.zshrc
