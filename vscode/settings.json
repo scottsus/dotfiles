@@ -31,6 +31,12 @@
   "vim.easymotion": true,
   "vim.useSystemClipboard": true,
   "vim.insertModeKeyBindings": [
+    /**
+     * to enable keyrepeat on Cursor do the following:
+     *
+     * osascript -e 'id of app "Cursor"'
+     * defaults write com.todesktop.{SOME_HASH} ApplePressAndHoldEnabled -bool false
+     */
     {
       "before": ["j", "k"],
       "after": ["<Esc>"]
